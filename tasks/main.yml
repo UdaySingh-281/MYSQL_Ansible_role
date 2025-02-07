@@ -1,0 +1,56 @@
+---
+# tasks file for mysql
+- name: Update apt cache
+  apt:
+    update_cache: yes
+
+- name: Install MySQL Server
+  apt:
+    name:
+      - mysql-server
+    state: present
+
+- name: Install PyMySQL
+  apt:
+    name: python3-pymysql
+    state: present
+
+- name: Configure MySQL to bind to all IPs
+  lineinfile:
+    path: /etc/mysql/mysql.conf.d/mysqld.cnf
+    regexp: "^bind-address"
+    line: "bind-address = 0.0.0.0"
+
+- name: Configure MySQLX to bind to all IPs
+  lineinfile:
+    path: /etc/mysql/mysql.conf.d/mysqld.cnf
+    regexp: "^mysqlx-bind-address"
+    line: "mysqlx-bind-address = 0.0.0.0"
+
+- name: Restart MySQL service
+  systemd:
+    name: mysql
+    state: restarted
+
+- name: Create chatapp database
+  community.mysql.mysql_db:
+    name: chatapp
+    login_user: root
+    state: present
+    login_unix_socket: /var/run/mysqld/mysqld.sock
+
+- name: Create admin user with remote access
+  community.mysql.mysql_user:
+    name: chatapp_user1
+    password:  sql_root_password
+    login_unix_socket: /var/run/mysqld/mysqld.sock
+    priv: "*.*:ALL"
+    host: "%"
+    append_privs: yes
+    state: present
+
+- name: Enable MySQL service to start on boot
+  systemd:
+    name: mysql
+    enabled: yes
+
