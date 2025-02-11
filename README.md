@@ -1,7 +1,6 @@
 # MYSQL_Ansible_role
-=======
-MySQL Setup using Ansible roles
-=========
+
+# MySQL Setup using Ansible roles
 
 This role is is used to setup MySQL Server
 
