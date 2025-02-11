@@ -1,11 +1,9 @@
-<<<<<<< HEAD
 # MYSQL_Ansible_role
-MySQL Setup using Ansible roles
 =======
-Role Name
+MySQL Setup using Ansible roles
 =========
 
-A brief description of the role goes here.
+This role is is used to setup MySQL Server
 
 Requirements
 ------------
@@ -40,4 +38,3 @@ Author Information
 ------------------
 
 An optional section for the role authors to include contact information, or a website (HTML is not allowed).
->>>>>>> af074a3 (MYSQL Ansible role)
