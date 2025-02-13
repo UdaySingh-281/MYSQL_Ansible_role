@@ -1,39 +1,53 @@
-# MYSQL_Ansible_role
+# MYSQL_Ansible_role  
 
-### MySQL Setup using Ansible roles
+## MySQL Setup using Ansible Roles  
 
-This role is is used to setup MySQL Server
+This Ansible role automates the setup of a MySQL Server and configures it for remote access.  
 
-Requirements
-------------
+## Requirements  
 
-Any pre-requisites that may not be covered by Ansible itself or the role should be mentioned here. For instance, if the role uses the EC2 module, it may be a good idea to mention in this section that the boto package is required.
+- Ubuntu-based system with Ansible installed  
+- Root or sudo privileges to install packages and modify configurations  
 
-Role Variables
---------------
+## Role Variables  
 
-A description of the settable variables for this role should go here, including any variables that are in defaults/main.yml, vars/main.yml, and any variables that can/should be set via parameters to the role. Any variables that are read from other roles and/or the global scope (ie. hostvars, group vars, etc.) should be mentioned here as well.
+The following variables can be modified in `vars/main.yml` or overridden in the playbook:  
 
-Dependencies
-------------
+| Variable              | Description                     | Default Value      |
+|-----------------------|---------------------------------|--------------------|
+| `mysql_root_password` | Root password for MySQL        | `sql_root_password` |
+| `mysql_db_name`       | Name of the MySQL database     | `chatapp`          |
+| `mysql_user`          | Username for the database user | `chatapp_user1`    |
+| `mysql_user_password` | Password for the database user | `sql_root_password` |
 
-A list of other roles hosted on Galaxy should go here, plus any details in regards to parameters that may need to be set for other roles, or variables that are used from other roles.
+## Dependencies  
 
-Example Playbook
-----------------
+This role does not depend on any external Ansible Galaxy roles.  
 
-Including an example of how to use your role (for instance, with variables passed in as parameters) is always nice for users too:
+## Example Playbook  
 
-    - hosts: servers
-      roles:
-         - { role: username.rolename, x: 42 }
+Here’s how you can use this role in your playbook:  
 
-License
--------
+```yaml
+- hosts: servers
+  become: yes
+  roles:
+    - mysql_ansible_role
+```
 
+## Tasks Included
+This role performs the following tasks:
+
+- Updates the apt cache
+- Installs MySQL Server and PyMySQL
+- Configures MySQL to allow remote connections
+- Restarts the MySQL service to apply changes
+- Creates a MySQL database (chatapp)
+- Creates a MySQL user (chatapp_user1) with remote access
+- Enables MySQL service to start on boot
+
+## License
 BSD
 
-Author Information
-------------------
-
-An optional section for the role authors to include contact information, or a website (HTML is not allowed).
+## Author
+Created by Uday Singh
